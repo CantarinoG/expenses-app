@@ -1,3 +1,4 @@
+import 'package:expenses/components/transactionForm.dart';
 import 'package:expenses/components/transactionList.dart';
 import 'package:expenses/models/transaction.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,6 @@ class ExpensesApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
-
   final _transactions = [
     Transaction(id: "0", title: "Luz", value: 147.38, date: DateTime.now()),
     Transaction(id: "1", title: "Agua", value: 30.15, date: DateTime.now()),
@@ -42,43 +40,7 @@ class HomePage extends StatelessWidget {
             width: double.infinity,
           ),
           TransactionList(transactions: _transactions),
-          Card(
-            elevation: 5,
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                children: <Widget>[
-                  TextField(
-                    controller: titleController,
-                    decoration: InputDecoration(labelText: 'Título'),
-                  ),
-                  TextField(
-                    controller: valueController,
-                    decoration: InputDecoration(labelText: "Valor (R\$)"),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      MaterialButton(
-                        onPressed: () {
-                          print(titleController.text);
-                          print(valueController.text);
-                          titleController.text = "";
-                          valueController.text = "";
-                        },
-                        child: Text(
-                          "Nova Transação",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.purple),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          )
+          TransactionForm(),
         ],
       ),
     );
