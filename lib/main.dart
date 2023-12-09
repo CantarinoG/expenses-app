@@ -12,8 +12,20 @@ class ExpensesApp extends StatelessWidget {
   const ExpensesApp({super.key});
   @override
   Widget build(BuildContext context) {
+    final ThemeData tema = ThemeData();
+
     return MaterialApp(
       home: HomePage(),
+      theme: tema.copyWith(
+          colorScheme: tema.colorScheme
+              .copyWith(primary: Colors.purple, secondary: Colors.amber),
+          textTheme: tema.textTheme.copyWith(
+              titleLarge: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ))),
     );
   }
 }
@@ -67,14 +79,16 @@ class _HomePageState extends State<HomePage> {
                 icon: Icon(Icons.add))
           ],
         ),
-        body: Column(
-          children: <Widget>[
-            Container(
-              child: Card(child: Text("Gráfico")),
-              width: double.infinity,
-            ),
-            TransactionList(transactions: _transactions),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: Card(child: Text("Gráfico")),
+                width: double.infinity,
+              ),
+              TransactionList(transactions: _transactions),
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
