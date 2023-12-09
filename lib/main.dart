@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     showModalBottomSheet(
         context: context,
         builder: (_) {
-          return TransactionForm(onSubmit: (_, a) {});
+          return TransactionForm(onSubmit: _addTransaction);
         });
   }
 
@@ -50,6 +50,8 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _transactions.add(transaction);
     });
+
+    Navigator.of(context).pop();
   }
 
   @override
