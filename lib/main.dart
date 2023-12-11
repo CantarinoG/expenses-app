@@ -21,11 +21,13 @@ class ExpensesApp extends StatelessWidget {
               .copyWith(primary: Colors.purple, secondary: Colors.amber),
           textTheme: tema.textTheme.copyWith(
               titleLarge: TextStyle(
-            fontFamily: 'OpenSans',
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ))),
+                fontFamily: 'Quicksand',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+              bodyMedium:
+                  TextStyle(fontFamily: 'Quicksand', color: Colors.black))),
     );
   }
 }
