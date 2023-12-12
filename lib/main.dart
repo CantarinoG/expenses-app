@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:expenses/components/chart.dart';
 import 'package:expenses/components/transactionForm.dart';
 import 'package:expenses/components/transactionList.dart';
 import 'package:expenses/models/transaction.dart';
@@ -40,12 +41,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _transactions = [
-    Transaction(id: "0", title: "Luz", value: 147.38, date: DateTime.now()),
-    Transaction(id: "1", title: "Agua", value: 30.15, date: DateTime.now()),
-    Transaction(
-        id: "2", title: "Internet", value: 109.99, date: DateTime.now()),
-  ];
+  final List<Transaction> _transactions = [];
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
@@ -53,6 +49,12 @@ class _HomePageState extends State<HomePage> {
         builder: (_) {
           return TransactionForm(onSubmit: _addTransaction);
         });
+  }
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((element) {
+      return element.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
   }
 
   _addTransaction(String title, double value) {
@@ -84,10 +86,7 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
-                child: Card(child: Text("Gráfico")),
-                width: double.infinity,
-              ),
+              Chart(recentTransactions: _recentTransactions),
               TransactionList(transactions: _transactions),
             ],
           ),
