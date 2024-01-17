@@ -4,6 +4,7 @@ import 'package:expenses/components/transactionForm.dart';
 import 'package:expenses/components/transactionList.dart';
 import 'package:expenses/models/transaction.dart';
 import 'package:flutter/material.dart';
+//import 'package:flutter/services.dart';
 
 void main() {
   runApp(const ExpensesApp());
@@ -11,9 +12,12 @@ void main() {
 
 class ExpensesApp extends StatelessWidget {
   const ExpensesApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     final ThemeData tema = ThemeData();
+
+    //SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return MaterialApp(
       home: HomePage(),
@@ -42,6 +46,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<Transaction> _transactions = [];
+  bool _showChart = false;
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
@@ -80,25 +85,49 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    bool isLandscape = mediaQuery.orientation == Orientation.landscape;
+
+    final appBar = AppBar(
+      title: Text("Despesas Pessoais"),
+      actions: <Widget>[
+        if (isLandscape)
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  _showChart = !_showChart;
+                });
+              },
+              icon: Icon(_showChart ? Icons.list : Icons.bar_chart)),
+        IconButton(
+            onPressed: () {
+              _openTransactionFormModal(context);
+            },
+            icon: Icon(Icons.add))
+      ],
+    );
+
+    final availableHeight = mediaQuery.size.height -
+        appBar.preferredSize.height -
+        mediaQuery.padding.top;
+
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Despesas Pessoais"),
-          actions: <Widget>[
-            IconButton(
-                onPressed: () {
-                  _openTransactionFormModal(context);
-                },
-                icon: Icon(Icons.add))
-          ],
-        ),
+        appBar: appBar,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Chart(recentTransactions: _recentTransactions),
-              TransactionList(
-                transactions: _transactions,
-                deleteFn: _deleteTransaction,
-              ),
+              if (_showChart || !isLandscape)
+                Container(
+                    height: availableHeight * (isLandscape ? 0.7 : 0.3),
+                    child: Chart(recentTransactions: _recentTransactions)),
+              if (!_showChart || !isLandscape)
+                Container(
+                  height: availableHeight * (isLandscape ? 1 : 0.7),
+                  child: TransactionList(
+                    transactions: _transactions,
+                    deleteFn: _deleteTransaction,
+                  ),
+                ),
             ],
           ),
         ),
