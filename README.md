@@ -1,16 +1,30 @@
-# expenses
+# Personal Expenses App
 
-A new Flutter project.
+A Flutter application for tracking personal expenses with a weekly overview chart.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Add new transactions with title, amount, and date
+- View transactions in a scrollable list
+- Delete transactions
+- Weekly expenses chart
+- Adaptive UI for both iOS and Android platforms
+- Responsive layout for different screen orientations
 
-A few resources to get you started if this is your first Flutter project:
+## Features in Detail
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Transaction Management
+- Add transactions with title and amount
+- Select date from date picker
+- Delete existing transactions
+- Transactions displayed in a scrollable list
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Weekly Chart
+- Visual representation of last 7 days' expenses
+- Percentage-based bar height
+- Daily total amount display
+
+### Adaptive Design
+- Platform-specific UI elements for iOS and Android
+- Responsive layout supporting both portrait and landscape orientations
+- Adaptive buttons and icons based on platform
